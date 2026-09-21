@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Birthday Quiz</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #fff1f5; }
+    button { display: block; margin: 10px auto; padding: 12px 20px; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h1 id="title">Happy birthday!</h1>
+  <div id="quiz"></div>
+
+  <script>
+    const questions = [
+      { q: "Which cake wins?", a: ["Chocolate", "Strawberry", "Lemon"] },
+      { q: "Pick a superpower.", a: ["Flying", "Invisibility", "Unlimited snacks"] }
+    ];
+    const answers = [];
+    let current = 0;
+
+    function showQuestion() {
+      const quiz = document.getElementById("quiz");
+      quiz.innerHTML = "<h2>" + questions[current].q + "</h2>";
+
+      questions[current].a.forEach(function (option) {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = function () {
+          answers.push(option);
+          current++;
+          if (current < questions.length) {
+            showQuestion();
+          } else {
+            showEnd();
+          }
+        };
+        quiz.appendChild(button);
+      });
+    }
+
+    function showEnd() {
+      document.getElementById("quiz").innerHTML = "<p>You picked: " + answers.join(", ") + "</p>";
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
