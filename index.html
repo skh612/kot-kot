@@ -1,49 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Birthday Quiz</title>
   <style>
-    body { font-family: sans-serif; text-align: center; background: #fff1f5; }
-    button { display: block; margin: 10px auto; padding: 12px 20px; font-size: 1rem; }
-  </style>
-</head>
-<body>
-  <h1 id="title">Happy birthday!</h1>
-  <div id="quiz"></div>
-
-  <script>
-    const questions = [
-      { q: "Which cake wins?", a: ["Chocolate", "Strawberry", "Lemon"] },
-      { q: "Pick a superpower.", a: ["Flying", "Invisibility", "Unlimited snacks"] }
-    ];
-    const answers = [];
-    let current = 0;
-
-    function showQuestion() {
-      const quiz = document.getElementById("quiz");
-      quiz.innerHTML = "<h2>" + questions[current].q + "</h2>";
-
-      questions[current].a.forEach(function (option) {
-        const button = document.createElement("button");
-        button.textContent = option;
-        button.onclick = function () {
-          answers.push(option);
-          current++;
-          if (current < questions.length) {
-            showQuestion();
-          } else {
-            showEnd();
-          }
-        };
-        quiz.appendChild(button);
-      });
+    body {
+      font-family: "Trebuchet MS", sans-serif;
+      background: #fff1f5;
+      color: #43263b;
+      text-align: center;
+      padding: 20px;
     }
 
-    function showEnd() {
-      document.getElementById("quiz").innerHTML = "<p>You picked: " + answers.join(", ") + "</p>";
-    }
+    .cake { position: relative; width: 220px; height: 150px; margin: 0 auto; }
+    .layer-bottom { position: absolute; bottom: 0; width: 220px; height: 38px; background: #a8ecd0; border-radius: 12px; }
+    .layer-top { position: absolute; bottom: 34px; left: 30px; width: 160px; height: 46px; background: #ffd76a; border-radius: 14px 14px 6px 6px; }
+    .icing { position: absolute; bottom: 64px; left: 30px; width: 160px; height: 16px; background: #ff6fa5; border-radius: 14px 14px 40px 40px; }
 
-    showQuestion();
-  </script>
-</body>
-</html>
+    .candles { position: absolute; bottom: 80px; left: 0; width: 220px; display: flex; justify-content: center; gap: 16px; }
+    .candle { position: relative; width: 10px; height: 40px; background: #ff6fa5; border-radius: 3px; }
+    .flame {
+      position: absolute; top: -20px; left: -2px;
+      width: 14px; height: 20px;
+      background: #ffb347;
+      border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+      display: none;
+    }
+    .candle.lit .flame { display: block; animation: flicker 0.8s ease-in-out infinite alternate; }
+    @keyframes flicker { to { transform: scale(1.1, 0.92) rotate(4deg); } }
+
+    .card { max-width: 420px; margin: 24px auto; background: white; border: 2px solid #ffd3e2; border-radius: 24px; padding: 24px; }
+    button {
+      display: block; width: 100%; margin: 10px 0; padding: 13px;
+      font-size: 1rem; font-family: inherit;
+      background: #fff5f8; border: 2px solid #ffd3e2; border-radius: 16px;
+      cursor: pointer;
+    }
