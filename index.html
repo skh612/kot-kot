@@ -37,3 +37,87 @@
       background: #fff5f8; border: 2px solid #ffd3e2; border-radius: 16px;
       cursor: pointer;
     }
+    button:hover { border-color: #ff6fa5; }
+  </style>
+</head>
+<body>
+  <div class="cake">
+    <div class="candles" id="candles"></div>
+    <div class="layer-top"></div>
+    <div class="icing"></div>
+    <div class="layer-bottom"></div>
+  </div>
+
+  <div class="card">
+    <h1 id="title"></h1>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    const friend = "Peter";
+    const questions = [
+      { q: "How are you feeling today?", a: ["Happy", "Cool", "Sexy", "Stupid", "Sad", "Tired"] }
+    ];
+
+    const answers = [];
+    let current = 0;
+    const title = document.getElementById("title");
+    const quiz = document.getElementById("quiz");
+    const candleBox = document.getElementById("candles");
+
+    for (let i = 0; i < questions.length; i++) {
+      candleBox.innerHTML += '<div class="candle"><div class="flame"></div></div>';
+    }
+
+    function showStart() {
+      title.textContent = "Happy birthday, " + friend + "!";
+      quiz.innerHTML = "";
+      const start = document.createElement("button");
+      start.textContent = "Let's take a test";
+      start.onclick = showQuestion;
+      quiz.appendChild(start);
+    }
+
+    function showQuestion() {
+      title.textContent = "Question " + (current + 1) + ": " + questions[current].q;
+      quiz.innerHTML = "";
+      questions[current].a.forEach(function (option) {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = function () {
+          answers.push(option);
+          candleBox.children[current].classList.add("lit");
+          current++;
+          if (current < questions.length) {
+            showQuestion();
+          } else {
+            showBlow();
+          }
+        };
+        quiz.appendChild(button);
+      });
+    }
+
+    function showBlow() {
+      title.textContent = "Make a wish!";
+      quiz.innerHTML = "";
+      const blow = document.createElement("button");
+      blow.textContent = "Blow out the candles";
+      blow.onclick = function () {
+        for (let i = 0; i < candleBox.children.length; i++) {
+          candleBox.children[i].classList.remove("lit");
+        }
+        showEnd();
+      };
+      quiz.appendChild(blow);
+    }
+
+    function showEnd() {
+      title.textContent = "Happy birthday, " + friend + "!";
+      quiz.innerHTML = "<p>You picked: " + answers.join(", ") + "</p>";
+    }
+
+    showStart();
+  </script>
+</body>
+</html>
